@@ -1,0 +1,69 @@
+#voici le code
+from random import randint, choice
+from tkinter import *
+import string
+
+def generate_password():
+    password_min = 6
+    password_max = 12
+    all_chars = string.ascii_letters + string.punctuation + string.digits
+    password = "".join(choice(all_chars)for x in range(randint(password_min,password_max)))
+    password_entry.delete(0,END)
+    password_entry.insert(0, password)
+
+#cree la fenetre
+window = Tk()
+window.title("Generateur de mots de passe")
+window.geometry("720x480")
+window.iconbitmap("png.ico")
+window.config(background='black')
+
+frame = Frame(window,bg='black')
+
+#creation d'image
+width = 300
+height = 300
+image = PhotoImage(file="informatique.png")
+canevas = Canvas(frame, width=width, height=height, bg='black',bd=1,highlightthickness=0)
+canevas.create_image(width/2, height/2, image=image)
+canevas.grid(row=0,column=0,sticky=W)
+
+#sous boite
+right_frame = Frame(frame,bg='black')
+
+#creation d'un titre
+label_title = Label(right_frame,text="Mots de passe",font=("Impact",20),bg='black',fg='white')
+label_title.pack()
+
+
+#creation d'un champ d'ecriture
+password_entry =Entry(right_frame,text="Mots de passe",font=("Impact",20),bg='black',fg='white')
+password_entry.pack()
+
+#cree un boutton
+generate_password_button = Button(right_frame,text="Génerer",font=("Impact",20),bg='black',fg='white',command=generate_password)
+generate_password_button.pack(fill=X)
+
+
+
+#on place le txt a droite
+right_frame.grid(row=0,column=1,sticky=W)
+
+#afficher la frame
+frame.pack(expand=YES)
+
+#creation d'un menu de navigation
+menu_bar = Menu(window)
+#cree un premier menu
+file_menu = Menu(menu_bar,tearoff=0)
+file_menu.add_command(label="Nouveau",command=generate_password)
+file_menu.add_command(label="Fermeture",command=window.quit)
+menu_bar.add_cascade(label="fichier", menu=file_menu)
+
+#creation d'une fenetre pour ajouter ce menu bar
+window.config(menu=menu_bar)
+
+
+
+#aficher la fenetre
+window.mainloop()
